@@ -26,6 +26,12 @@ app.use('/api/files', fileRoutes);
 // Error handling middleware
 app.use(errorHandler);
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
+
 // Start the server
 const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
