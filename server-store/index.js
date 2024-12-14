@@ -1,29 +1,46 @@
-// server.js - Main entry point
 const express = require('express');
 const mongoose = require('mongoose');
 const http = require('http');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const serviceAccount = require('./config/serviceAccountKey.json');
 const fileRoutes = require('./routes/fileRoutes');
 const qrRoutes = require('./routes/qrRoutes');
 const authRoutes = require('./routes/authRoutes');
 const historyRoutes = require('./routes/historyRoutes');
 const { verifyToken } = require('./middlewares/authMiddleware');
 
+require('dotenv').config();
+
+
 const app = express();
 const server = http.createServer(app);
 
+
+
+const serviceAccount = {
+  type: process.env.FIREBASE_TYPE,
+  project_id: process.env.FIREBASE_PROJECT_ID,
+  private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  client_email: process.env.FIREBASE_CLIENT_EMAIL,
+  client_id: process.env.FIREBASE_CLIENT_ID,
+  auth_uri: process.env.FIREBASE_AUTH_URI,
+  token_uri: process.env.FIREBASE_TOKEN_URI,
+  auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_CERT_URL,
+  client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL,
+};
+
+
 // Middleware
 app.use(cors({
-  origin: '*', // Allows requests from any origin
-  credentials: true // Allows cookies, if needed
+  origin: '*', 
+  credentials: true 
 }));
 app.use(express.json());
 
 // MongoDB connection setup
 mongoose
-  .connect('mongodb+srv://Nilesh:abc%40123@scan2printcluster.ddvpt.mongodb.net/Scan2PrintDB?retryWrites=true&w=majority&appName=Scan2PrintCluster')
+  .connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB Atlas'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -36,13 +53,14 @@ if (!admin.apps.length) {
   console.log('Firebase Admin app already initialized');
 }
 
+
 // Routes
 app.use('/files', verifyToken, fileRoutes);
 app.use('/qr', verifyToken, qrRoutes);
 app.use('/auth', verifyToken, authRoutes);
 app.use('/history', verifyToken, historyRoutes);
-// Start the server
-const PORT = 3000;
+
+const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
