@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, useSearchParams } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useSearchParams,
+} from "react-router-dom";
 import axios from "axios";
 import {
   Button,
@@ -27,7 +32,13 @@ const UploadFile = () => {
     if (storeid) setReceivedBy(storeid);
   }, [searchParams]);
 
-  const allowedFileTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/jpeg", "image/png", "image/gif"];
+  const allowedFileTypes = [
+    "application/pdf",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+  ];
 
   const onDrop = (acceptedFiles) => {
     const validFiles = acceptedFiles.filter((file) => {
@@ -35,27 +46,27 @@ const UploadFile = () => {
         alert(`File ${file.name} is not an allowed type.`);
         return false;
       }
-  
-      if (file.size > 25 * 1024 * 1024) { // 25 MB in bytes
+
+      if (file.size > 25 * 1024 * 1024) {
+        // 25 MB in bytes
         alert(`File ${file.name} exceeds the 25 MB size limit.`);
         return false;
       }
-  
+
       return true;
     });
-  
+
     if (selectedFiles.length + validFiles.length > 5) {
       alert("You can only select up to 5 files.");
       return;
     }
-  
+
     setSelectedFiles((prevFiles) => [...prevFiles, ...validFiles]);
     setUploadProgress((prevProgress) => [
       ...prevProgress,
       ...new Array(validFiles.length).fill(0),
     ]);
   };
-  
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
@@ -85,30 +96,26 @@ const UploadFile = () => {
       formData.append("name", userName);
 
       try {
-        await axios.post("http://localhost:9000/upload", formData, {
+        await axios.post("http://localhost:8000/api/files/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
-            newProgress[i] = percentCompleted; 
+            newProgress[i] = percentCompleted;
             setUploadProgress([...newProgress]);
           },
         });
 
-        if(i==selectedFiles.length-1){
+        if (i === selectedFiles.length - 1) {
           alert(`Files uploaded successfully.`);
         }
-        
       } catch (error) {
         console.error(`Error uploading file ${selectedFiles[i].name}:`, error);
         alert(`${error.response.data.error}`);
         window.location.reload();
       }
     }
-
-    
-    
 
     setLoading(false);
     window.location.reload();
@@ -166,7 +173,11 @@ const UploadFile = () => {
 
         {selectedFiles.map((file, index) => (
           <Paper key={index} elevation={2} sx={{ padding: 2, marginTop: 2 }}>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
               <Typography variant="body1" gutterBottom>
                 {file.name}
               </Typography>
@@ -192,7 +203,6 @@ const UploadFile = () => {
     </Container>
   );
 };
-
 
 const UploadFilewithStoreID = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -263,7 +273,7 @@ const UploadFilewithStoreID = () => {
       formData.append("name", userName);
 
       try {
-        await axios.post("http://localhost:9000/upload", formData, {
+        await axios.post("http://localhost:8000/api/files/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
@@ -342,7 +352,12 @@ const UploadFilewithStoreID = () => {
           variant="contained"
           color="primary"
           onClick={handleUpload}
-          disabled={loading || selectedFiles.length === 0 || !userName.trim() || !receivedBy.trim()}
+          disabled={
+            loading ||
+            selectedFiles.length === 0 ||
+            !userName.trim() ||
+            !receivedBy.trim()
+          }
           fullWidth
         >
           {loading ? "Uploading..." : "Upload for Printing"}
@@ -350,7 +365,11 @@ const UploadFilewithStoreID = () => {
 
         {selectedFiles.map((file, index) => (
           <Paper key={index} elevation={2} sx={{ padding: 2, marginTop: 2 }}>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
               <Typography variant="body1" gutterBottom>
                 {file.name}
               </Typography>
@@ -367,7 +386,9 @@ const UploadFilewithStoreID = () => {
               value={uploadProgress[index] || 0}
               sx={{ marginBottom: 1 }}
             />
-            <Typography variant="caption">{uploadProgress[index] || 0}%</Typography>
+            <Typography variant="caption">
+              {uploadProgress[index] || 0}%
+            </Typography>
           </Paper>
         ))}
       </Box>
@@ -378,15 +399,7 @@ const UploadFilewithStoreID = () => {
 const App = () => (
   <Router>
     <Routes>
-      <Route
-        path="/"
-        element={
-          // <>
-          //   Customer Upload Page is ready for file uploads
-          // </>
-          <UploadFilewithStoreID/>
-        }
-      />
+      <Route path="/" element={<UploadFilewithStoreID />} />
       <Route path="/upload" element={<UploadFile />} />
     </Routes>
   </Router>
