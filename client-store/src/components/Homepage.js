@@ -38,7 +38,7 @@ function Homepage() {
       });
       console.log('Login Successful',response);
     } catch (error) {
-      console.error('Login Error:', error.message);
+      console.error('Login Error:', error);
     }
     setLoading(false);
   };
