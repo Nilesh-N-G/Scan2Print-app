@@ -14,7 +14,6 @@ import SignIn from "./components/Homepage";
 import DashboardMain from "./components/DashboardMain";
 import ManageQRCode from "./components/ManageQRCode"; 
 import Layout from "./components/Layout"; 
-const BASE_URL = process.env.REACT_APP_API_URL;
 function App() {
   const [user, setUser] = useState(null);
   const [rows, setRows] = useState([]);
