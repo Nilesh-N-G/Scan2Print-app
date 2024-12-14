@@ -36,7 +36,7 @@ function Homepage() {
           Authorization: `Bearer ${token}`, // Set the Authorization header
         },
       });
-      // console.log('Login Successful',response);
+      console.log('Login Successful',response);
     } catch (error) {
       console.error('Login Error:', error.message);
     }
