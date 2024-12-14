@@ -24,9 +24,9 @@ function FileTable({ rows, setRows ,setNotifications ,loading}) {
   
   const updateRecentHistory = async (operation, filename, token) => {
     try {
-      console.log("Updating recent history")
+      // console.log("Updating recent history")
       const response = await axios.post(
-        'http://localhost:3000/history/update',
+        'https://scan2print-app.onrender.com/history/update',
         { operation, filename },
         {
           headers: {
@@ -34,7 +34,7 @@ function FileTable({ rows, setRows ,setNotifications ,loading}) {
           },
         }
       );
-      console.log('Recent history updated:', response.data);
+      // console.log('Recent history updated:', response.data);
     } catch (error) {
       if (error.response) {
         console.error('Error updating recent history:', error.response.data);
@@ -76,7 +76,7 @@ useEffect(() => {
       renderCell: (params) => {
         // Render the status with custom styles based on its value
         let status = params.row.status || 'Pending';
-        console.log('Status',status);
+        // console.log('Status',status);
 
         if (status === 'pending' && params.row.viewed){
           status = 'viewed';
@@ -103,7 +103,7 @@ useEffect(() => {
           const fileId = params.row.id;
           const fileName = params.row.filename;
           const user = getAuth().currentUser;
-          console.log(params.row.status)
+          // console.log(params.row.status)
           if(params.row.status === "pending") {
             setNotifications((prevNotifications) => Math.max(prevNotifications - 1, 0));
           }
@@ -122,7 +122,7 @@ useEffect(() => {
                 alert("Failed to open new tab");
                 return;
               }try {
-                const response = await axios.get(`http://localhost:3000/files/${fileId}`, {
+                const response = await axios.get(`https://scan2print-app.onrender.com/files/${fileId}`, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },
@@ -152,7 +152,7 @@ useEffect(() => {
              
             } else if (actionType === "Print") {
               try {
-                const response = await axios.get(`http://localhost:3000/files/${fileId}`, {
+                const response = await axios.get(`https://scan2print-app.onrender.com/files/${fileId}`, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },
@@ -193,7 +193,7 @@ useEffect(() => {
               }
             } else if (actionType === "Delete") {
               try {
-                await axios.delete(`http://localhost:3000/files/${fileId}`, {
+                await axios.delete(`https://scan2print-app.onrender.com/files/${fileId}`, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },

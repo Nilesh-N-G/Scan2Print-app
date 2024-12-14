@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo2.jpg";
 
 function Header({ userInfo,notifications }) {
-  console.log(userInfo);
+  // console.log(userInfo);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -31,7 +31,7 @@ function Header({ userInfo,notifications }) {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        console.log("User logged out");
+        // console.log("User logged out");
         navigate("/");
       })
       .catch((error) => {

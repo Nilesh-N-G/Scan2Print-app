@@ -5,6 +5,9 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import '../App.css'; // Make sure to include global CSS file for fonts
 import MenuIcon from '@mui/icons-material/Menu';
 import axios from 'axios';
+import img1 from '../assets/images/qrcode.webp'
+import img2 from '../assets/images/tempstorage.webp'
+import img3 from '../assets/images/dashboard.webp'
 function Homepage() {
   const [loading, setLoading] = useState(false);
 
@@ -28,12 +31,12 @@ function Homepage() {
       await signInWithPopup(auth, provider);
       const token = await auth.currentUser.getIdToken(true);
       // console.log(token);
-      const response = await axios.post("http://localhost:3000/auth/login",{}, {
+      const response = await axios.post("https://scan2print-app.onrender.com/auth/login",{}, {
         headers: {
           Authorization: `Bearer ${token}`, // Set the Authorization header
         },
       });
-      console.log('Login Successful',response);
+      // console.log('Login Successful',response);
     } catch (error) {
       console.error('Login Error:', error.message);
     }
@@ -179,7 +182,7 @@ function Homepage() {
         <Grid container spacing={4}>
           <Grid item xs={12} sm={4}>
             <Box sx={{ textAlign: 'center', p: 4, backgroundColor: 'white', borderRadius: 2, boxShadow: 3 }}>
-              <img src="https://via.placeholder.com/80" alt="QR Code Sharing" style={{ width: '80px', marginBottom: '20px' }} />
+              <img src={img1} alt="QR Code Sharing" style={{ width: '80px', marginBottom: '20px' }} />
               <Typography variant="h5" sx={{ mb: 2, fontFamily: 'Poppins, sans-serif' }}>
                 QR Code Sharing
               </Typography>
@@ -190,7 +193,7 @@ function Homepage() {
           </Grid>
           <Grid item xs={12} sm={4}>
             <Box sx={{ textAlign: 'center', p: 4, backgroundColor: 'white', borderRadius: 2, boxShadow: 3 }}>
-              <img src="https://via.placeholder.com/80" alt="Temporary Storage" style={{ width: '80px', marginBottom: '20px' }} />
+              <img src={img2} alt="Temporary Storage" style={{ width: '80px', marginBottom: '20px' }} />
               <Typography variant="h5" sx={{ mb: 2, fontFamily: 'Poppins, sans-serif' }}>
                 Temporary Storage
               </Typography>
@@ -201,7 +204,7 @@ function Homepage() {
           </Grid>
           <Grid item xs={12} sm={4}>
             <Box sx={{ textAlign: 'center', p: 4, backgroundColor: 'white', borderRadius: 2, boxShadow: 3 }}>
-              <img src="https://via.placeholder.com/80" alt="Dashboard Management" style={{ width: '80px', marginBottom: '20px' }} />
+              <img src={img3} alt="Dashboard Management" style={{ width: '80px', marginBottom: '20px' }} />
               <Typography variant="h5" sx={{ mb: 2, fontFamily: 'Poppins, sans-serif' }}>
                 Easy Dashboard
               </Typography>

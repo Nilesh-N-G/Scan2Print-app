@@ -12,12 +12,13 @@ import { auth } from "./config/firebaseConfig";
 import axios from "axios";
 import SignIn from "./components/Homepage";
 import DashboardMain from "./components/DashboardMain";
-import ManageQRCode from "./components/ManageQRCode"; // Manage QR Code page
-import Layout from "./components/Layout"; // Import the Layout component
+import ManageQRCode from "./components/ManageQRCode"; 
+import Layout from "./components/Layout"; 
+const BASE_URL = process.env.REACT_APP_API_URL;
 function App() {
   const [user, setUser] = useState(null);
   const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [loading, setLoading] = useState(true); 
   const [userInfo, setUserInfo] = useState({
     email: "",
     photoURL: "",
@@ -33,7 +34,7 @@ function App() {
         setUserInfo({
           email: currentUser.email || "No Email",
           photoURL: currentUser.photoURL || "",
-          displayName: currentUser.displayName || "User", // Add displayName fallback
+          displayName: currentUser.displayName || "User", 
         });
       } else {
         setUser(null);
@@ -45,8 +46,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    let fetchIntervalId; // For fetching files
-    let timeLeftIntervalId; // For updating the time left dynamically
+    let fetchIntervalId; 
+    let timeLeftIntervalId; 
 
     const calculateTimeLeft = (uploadTime) => {
       const uploadDate = new Date(uploadTime);
@@ -64,21 +65,21 @@ function App() {
     };
 
     const fetchFiles = async () => {
-      if (!user) return; // If no user, do not fetch files
+      if (!user) return; 
 
       try {
-        const token = await user.getIdToken(true); // Get a fresh token
-        // console.log("Firebase Access Token:", token);
+        const token = await user.getIdToken(true); 
+        
 
-        const response = await axios.get("http://localhost:3000/files", {
+        const response = await axios.get(`https://scan2print-app.onrender.com/files`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Set the Authorization header
+            Authorization: `Bearer ${token}`, 
           },
         });
         setLoading(false);
 
         const formattedRows = response.data.map((file) => {
-          const rawDate = new Date(file.timeofupload); // Raw date from server
+          const rawDate = new Date(file.timeofupload); 
           const formattedDate = new Intl.DateTimeFormat("en-IN", {
             year: "numeric",
             month: "2-digit",
@@ -95,7 +96,7 @@ function App() {
             customername: file.sentby || "Unknown Customer",
             filetype: file.mimetype.split("/")[1].toUpperCase(),
             uploadtime: formattedDate,
-            timeofupload: file.timeofupload, // Keep original time for recalculation
+            timeofupload: file.timeofupload, 
             timeleft: calculateTimeLeft(file.timeofupload),
             status: file.status,
             viewed:false
@@ -118,7 +119,7 @@ function App() {
           return [...prevRows, ...newRows];
         });
 
-        console.log("Files fetched successfully:", formattedRows);
+        // console.log("Files fetched successfully:", formattedRows);
       } catch (error) {
         console.error(
           "Error fetching files:",
