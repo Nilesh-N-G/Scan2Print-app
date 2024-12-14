@@ -96,7 +96,7 @@ const UploadFile = () => {
       formData.append("name", userName);
 
       try {
-        await axios.post("http://localhost:8000/api/files/upload", formData, {
+        await axios.post("https://scan2print-app-1.onrender.com/api/files/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
@@ -273,7 +273,7 @@ const UploadFilewithStoreID = () => {
       formData.append("name", userName);
 
       try {
-        await axios.post("http://localhost:8000/api/files/upload", formData, {
+        await axios.post("https://scan2print-app-1.onrender.com/api/files/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
