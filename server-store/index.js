@@ -62,6 +62,7 @@ app.use('/history', verifyToken, historyRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
+  console.log('Checking health');
   res.status(200).send('OK');
 });
 
