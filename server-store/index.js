@@ -65,6 +65,15 @@ app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
 
+
+// Error handling middleware (should be added after all routes)
+app.use((err, req, res, next) => {
+  console.error(`[Error] ${req.method} ${req.url}: ${err.message}`);
+  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+});
+
+
+
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

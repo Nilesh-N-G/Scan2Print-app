@@ -153,6 +153,19 @@ function App() {
     };
   }, [user]);
 
+  useEffect(() => {
+    const checkServer = async () => {
+      try {
+        await axios.get('https://scan2print-app.onrender.com/health');
+        handleGenerate();
+      } catch {
+        console.error('Server is not running');
+      }
+    };
+    checkServer();
+  }, []);
+  
+
   return (
     <div className="App">
       <Container disableGutters maxWidth="xl" sx={{ padding: 0, margin: 0 }}>
