@@ -40,7 +40,9 @@ function Homepage() {
     } catch (error) {
       console.error('Login Error:', error);
     }
-    setLoading(false);
+    finally {
+      setLoading(false); // Ensure loading is set to false regardless of success or failure
+    }
   };
 
   const [isDrawerOpen, setDrawerOpen] = useState(false);
