@@ -88,6 +88,7 @@ function App() {
             hour12: true,
             // timeZone: "Asia/Kolkata",
           }).format(rawDate);
+          
 
           return {
             id: file._id,
@@ -101,6 +102,8 @@ function App() {
             viewed:false
           };
         });
+
+        console.log("Formated Rows : " ,formattedRows);
         // Count files with status 'pending'
         const pendingFilesCount = formattedRows.filter(
           (file) => file.status === "pending"
