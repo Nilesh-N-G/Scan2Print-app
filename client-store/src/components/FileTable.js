@@ -11,6 +11,7 @@ const calculateTimeLeft = (uploadTime) => {
   const uploadDate = new Date(uploadTime);
   const expirationDate = new Date(uploadDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours
   const now = new Date();
+  
   const istNow = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
   
 
