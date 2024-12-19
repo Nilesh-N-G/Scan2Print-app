@@ -9,12 +9,12 @@ import "../App.css"; // Import custom CSS
 // Function to calculate time left
 const calculateTimeLeft = (uploadTime) => {
   const uploadDate = new Date(uploadTime);
-  const expirationDate = new Date(uploadDate.getTime() + 24 * 60 * 60 * 1000); // 24 hours
+  const expirationDate = new Date(uploadDate.getTime() + 18 * 30 * 60 * 1000); // 18.30 + 5.30 (mongodb) 24 hours
   const now = new Date();
 
   
 
-  const diffInMs = expirationDate - now - (5.5 * 60 * 60 * 1000);
+  const diffInMs = expirationDate - now;
   if (diffInMs <= 0) return "Expired";
 
   const hours = Math.floor(diffInMs / (1000 * 60 * 60));
