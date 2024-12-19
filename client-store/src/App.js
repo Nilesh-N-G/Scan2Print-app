@@ -153,17 +153,7 @@ function App() {
     };
   }, [user]);
 
-  useEffect(() => {
-    const checkServer = async () => {
-      try {
-        await axios.get('https://scan2print-app.onrender.com/health');
-        handleGenerate();
-      } catch {
-        console.error('Server is not running');
-      }
-    };
-    checkServer();
-  }, []);
+
   
 
   return (
