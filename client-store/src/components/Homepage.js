@@ -39,6 +39,7 @@ function Homepage() {
       // console.log('Login Successful',response);
     } catch (error) {
       console.error('Login Error:', error);
+      setLoading(false); // Reset loading here if an error occurs
     }
     finally {
       setLoading(false); // Ensure loading is set to false regardless of success or failure
