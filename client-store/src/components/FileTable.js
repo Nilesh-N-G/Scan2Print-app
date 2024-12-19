@@ -11,6 +11,7 @@ const calculateTimeLeft = (uploadTime) => {
   const uploadDate = new Date(uploadTime);
   const expirationDate = new Date(uploadDate.getTime() + 18 * 30 * 60 * 1000); // 18.30 + 5.30 (mongodb) 24 hours
   const now = new Date();
+  
 
   
 
@@ -19,6 +20,7 @@ const calculateTimeLeft = (uploadTime) => {
 
   const hours = Math.floor(diffInMs / (1000 * 60 * 60));
   const minutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+  console.log("Time left: " + hours,minutes);
   return `${hours}h ${minutes}m`;
 };
 
