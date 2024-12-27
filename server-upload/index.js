@@ -27,9 +27,9 @@ app.use('/api/files', fileRoutes);
 app.use(errorHandler);
 
 // Health check endpoint
-app.get('/healthcheck', (req, res) => {
+app.get('/health', (req, res) => {
   console.log(`Health check from IP: ${req.ip}, User-Agent: ${req.get('User-Agent')}`);
-  res.status(200).send('OK');
+  res.status(200).send('K');
 });
 
 
