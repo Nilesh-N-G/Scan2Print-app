@@ -30,7 +30,7 @@ function FileTable({ rows, setRows ,setNotifications ,loading}) {
     try {
       // console.log("Updating recent history")
       const response = await axios.post(
-        'https://scan2print-app.onrender.com/history/update',
+        'https://scan2print-app-tzor.onrender.com/history/update',
         { operation, filename },
         {
           headers: {
@@ -126,7 +126,7 @@ useEffect(() => {
                 alert("Failed to open new tab");
                 return;
               }try {
-                const response = await axios.get(`https://scan2print-app.onrender.com/files/${fileId}`, {
+                const response = await axios.get(`https://scan2print-app-tzor.onrender.com/files/${fileId}`, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },
@@ -156,7 +156,7 @@ useEffect(() => {
              
             } else if (actionType === "Print") {
               try {
-                const response = await axios.get(`https://scan2print-app.onrender.com/files/${fileId}`, {
+                const response = await axios.get(`https://scan2print-app-tzor.onrender.com/files/${fileId}`, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },
@@ -197,7 +197,7 @@ useEffect(() => {
               }
             } else if (actionType === "Delete") {
               try {
-                await axios.delete(`https://scan2print-app.onrender.com/files/${fileId}`, {
+                await axios.delete(`https://scan2print-app-tzor.onrender.com/files/${fileId}`, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },

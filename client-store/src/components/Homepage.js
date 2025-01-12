@@ -31,7 +31,7 @@ function Homepage() {
       await signInWithPopup(auth, provider);
       const token = await auth.currentUser.getIdToken(true);
       // console.log(token);
-      const response = await axios.post("https://scan2print-app.onrender.com/auth/login",{}, {
+      const response = await axios.post("https://scan2print-app-tzor.onrender.com/auth/login",{}, {
         headers: {
           Authorization: `Bearer ${token}`, // Set the Authorization header
         },

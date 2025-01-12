@@ -18,7 +18,7 @@ const ManageQRCode = ({ userInfo }) => {
 
     try {
       // console.log(token);
-      const response = await axios.get('https://scan2print-app.onrender.com/qr/generate', {
+      const response = await axios.get('https://scan2print-app-tzor.onrender.com/qr/generate', {
         params: { email },
         headers: {
           Authorization: `Bearer ${token}`,
