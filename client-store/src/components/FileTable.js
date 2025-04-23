@@ -5,6 +5,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import axios from 'axios';
 import "../App.css"; // Import custom CSS
+import { Box, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 
 // Function to calculate time left
 const calculateTimeLeft = (uploadTime) => {
@@ -25,6 +28,7 @@ const calculateTimeLeft = (uploadTime) => {
 };
 
 function FileTable({ rows, setRows ,setNotifications ,loading}) {
+const navigate = useNavigate();
   
   const updateRecentHistory = async (operation, filename, token) => {
     try {
@@ -252,6 +256,35 @@ useEffect(() => {
     },
   ];
 
+  function CustomNoRowsOverlay({ navigate }) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+          color: 'gray',
+          textAlign: 'center',
+          px: 2,
+        }}
+      >
+        <Typography variant="h6" mb={1}>No files uploaded</Typography>
+        <Typography variant="body2" mb={2}>
+          Ask the client to scan the QR code and upload the files.
+        </Typography>
+        <Button
+          onClick={() => navigate("/qr-code")}
+          variant="text"
+          size="small"
+          sx={{ textTransform: 'none', fontWeight: 500 }}
+        >
+          Open QR Section
+        </Button>
+      </Box>
+    );
+  }
   return (
     <>
       {/* <Typography variant="h6" sx={{ mb: 2, display: 'flex', justifyContent: 'flex-start', mx: 0, p: 0 }}>
@@ -259,25 +292,28 @@ useEffect(() => {
       </Typography> */}
 
       <Paper sx={{ height: 450, width: "100%",marginTop:2 }}>
-        <DataGrid
-          rows={[...rows].reverse()}
-          columns={columns}
-          loading={loading} 
-          getRowClassName={(params) => {
-            if (params.row.printed) return "row-printed";
-            if (params.row.status === 'printed') return "row-printed";
-            if (params.row.status === 'viewed') return "row-viewed";
-            if (params.row.viewed) return "row-viewed" 
-            
-            
-            return "";
-            
-          }}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          sx={{ border: 0 }}
-          disableRowSelectionOnClick
-        />
+  
+
+
+      <DataGrid
+  rows={[...rows].reverse()}
+  columns={columns}
+  loading={loading}
+  getRowClassName={(params) => {
+    if (params.row.printed) return "row-printed";
+    if (params.row.status === 'printed') return "row-printed";
+    if (params.row.status === 'viewed') return "row-viewed";
+    if (params.row.viewed) return "row-viewed";
+    return "";
+  }}
+  initialState={{ pagination: { paginationModel } }}
+  pageSizeOptions={[5, 10]}
+  sx={{ border: 0 }}
+  disableRowSelectionOnClick
+  slots={{
+    noRowsOverlay: () => <CustomNoRowsOverlay navigate={navigate} />,
+  }}
+/>
       </Paper>
     </>
   );

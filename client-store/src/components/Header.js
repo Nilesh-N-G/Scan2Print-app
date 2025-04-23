@@ -21,7 +21,7 @@ import { auth } from "../config/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo2.jpg";
 
-function Header({ userInfo,notifications }) {
+function Header({ userInfo, notifications }) {
   // console.log(userInfo);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -56,7 +56,7 @@ function Header({ userInfo,notifications }) {
           display: "flex",
           justifyContent: isMobile ? "space-between" : "space-between",
           alignItems: "center",
-          backgroundColor:'#F8FAFA',
+          backgroundColor: '#F8FAFA',
           p: isMobile ? 1 : 2,
         }}
       >
@@ -108,18 +108,18 @@ function Header({ userInfo,notifications }) {
           /* Full Menu for Larger Screens */
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             {menuItems.slice(0, 2).map((item, index) => (
-              <IconButton sx={{ borderRadius: "20px" }}  key={index} onClick={item.action}>
+              <IconButton sx={{ borderRadius: "20px" }} key={index} onClick={item.action}>
                 <Typography variant="subtitle1" sx={{ color: "black" }}>
                   {item.text}
                 </Typography>
               </IconButton>
             ))}
-            <IconButton sx={{ borderRadius: "20px" }}  onClick={handleLogout}>
+            <IconButton sx={{ borderRadius: "20px" }} onClick={handleLogout}>
               <Typography variant="subtitle1" sx={{ color: "black" }}>
                 Log Out
               </Typography>
             </IconButton>
-            <IconButton>
+            <IconButton onClick={() => navigate("/dashboard")}>
               <Badge badgeContent={notifications} color="secondary">
                 <NotificationsIcon />
               </Badge>
